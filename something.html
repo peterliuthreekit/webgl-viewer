@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <style>
+        :root {
+            --viewer-pad: 12px;
+            --shadow-color-dark: #222;
+            --shadow-color-brand: #388D9B;
+            --logo-transition-time: 0.2s;
+            margin: 0px;
+            color: #999;
+            font-family: sans-serif;
+            font-size: 10px;
+        }
+        .hidden {
+            position: absolute;
+            opacity: 0;
+            z-index: 999;
+            pointer-events: none;
+        }
+        #p {
+            left: 24px;
+            top: 15px;
+            transition: all var(--logo-transition-time);
+        }
+        #wordmark {
+            top: 20px;
+            left: 110px;
+            transition-delay: 0.1s;
+            transition: all var(--logo-transition-time) 0.1s;
+        }
+        img {
+            vertical-align: bottom;
+            cursor: pointer;
+        }
+        section {
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 12vh;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            background-color: #fff;
+            user-select: none;
+            border: 1px solid #ddd;
+        }
+        .animatebg {
+            animation: testbg 30s infinite;
+        }
+        .controls img {
+            filter: drop-shadow(0px 0px 1.8px var(--shadow-color-dark));
+            margin: 4px;
+        }
+        #controls-left {
+            position: absolute;
+            bottom: var(--viewer-pad);
+            left: var(--viewer-pad);
+        }
+        #controls-right {
+            position: absolute;
+            bottom: var(--viewer-pad);
+            right: var(--viewer-pad);
+        }
+        #controls-right img {
+            margin-left: 14px;
+        }
+        #logo {
+            position: absolute;
+            top: var(--viewer-pad);
+            left: var(--viewer-pad);
+            width: 22px;
+            padding: 8px;
+            background-color: white;
+            border-radius: 19px;
+            box-shadow: 0px 0px 3px var(--shadow-color-brand);
+            transition: width var(--logo-transition-time) ease-in-out;
+            cursor: pointer;
+        }
+        #logo img {
+            transition: all var(--logo-transition-time) ease-in-out;
+        }
+        @keyframes testbg {
+            0% {background-color: #fff;}
+            12% {background-color: #222;}
+            24% {background-color: #ccc;}
+            36% {background-color: blue;}
+            48% {background-color: #777;}
+            60% {background-color: #000;}
+            72% {background-color: red;}
+            84% {background-color: #999;}
+            100% {background-color:#fff;}
+        }
+    </style>
+    <script>
+        let ploo = () => {
+            let main = document.getElementById('main');
+            if (main.classList.contains('animatebg')) {
+                main.classList.remove('animatebg');
+            } else {
+                main.classList.add('animatebg');
+            }
+        }
+        let eloo = () => {    
+            let logo = document.getElementById('logo');
+            let glyph = document.getElementById('glyph');
+            let p = document.getElementById('p');
+            let wordmark = document.getElementById('wordmark')
+            logo.style = "width: 140px";
+            glyph.style = "transform: translate(65px)";
+            p.style = "opacity: 1";
+            wordmark.style = "opacity: 1; transition: all var(--logo-transition-time) 0.1s;";
+        }
+        let lloo = () => {
+            let logo = document.getElementById('logo');
+            let glyph = document.getElementById('glyph');
+            let p = document.getElementById('p');
+            let wordmark = document.getElementById('wordmark')
+            logo.style = "width: 22px";
+            glyph.style = "transform: translate(0px)";
+            p.style = "opacity: 0";
+            wordmark.style = "opacity: 0; transition: all 0.1s 0s";
+        }
+    </script>
+</head>
+<body>
+    <h2>WebGL player design</h2>
+    <button onclick='ploo()'>Toggle background animation</button>
+    <section id='main' class='animatebg'>
+        <p id='p' class='hidden'>Powered by</p>
+        <img id='wordmark' class='hidden' src='images/threekit-wordmark.svg'>
+        <div id='logo' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" onmouseout="lloo()">
+            <img src='images/threekit-glyph.svg' id='glyph'>
+        </div>        
+        <div class='controls' id='controls-left'>
+                <img src='images/play.svg'>
+        </div>
+        <div class='controls' id='controls-right'>
+            <img src='images/help.svg'>
+            <img src='images/share.svg'>
+            <img src='images/fullscreen.svg'>
+        </div>
+    </section>
+</body>
+</html>
