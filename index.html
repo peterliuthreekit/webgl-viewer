@@ -7,17 +7,24 @@
             --viewer-pad: 12px;
             --shadow-color-dark: #222;
             --shadow-color-brand: #388D9B;
+            --threekit-color-primary: #4AB7C3;
             --logo-transition-time: 0.2s;
             margin: 0px;
-            color: #999;
             font-family: sans-serif;
-            font-size: 10px;
+        }
+        body {
+            margin: 0px;
         }
         .hidden {
             position: absolute;
             opacity: 0;
             z-index: 999;
             pointer-events: none;
+            font-size: 10px;
+            color: #999;
+        }
+        .dontshow {
+            display: none;
         }
         #p {
             left: 24px;
@@ -38,10 +45,10 @@
             position: relative;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 12vh;
+            margin-top: 9vh;
             width: 100%;
             max-width: 600px;
-            height: 500px;
+            height: 450px;
             background-color: #fff;
             user-select: none;
             border: 1px solid #ddd;
@@ -51,7 +58,7 @@
         }
         .controls img {
             filter: drop-shadow(0px 0px 1.8px var(--shadow-color-dark));
-            margin: 4px;
+            padding: 4px;
         }
         #controls-left {
             position: absolute;
@@ -64,7 +71,10 @@
             right: var(--viewer-pad);
         }
         #controls-right img {
-            margin-left: 14px;
+            margin-left: 10px;
+        }
+        #controls-left img {
+            margin-right: 10px;
         }
         #logo {
             position: absolute;
@@ -81,6 +91,32 @@
         #logo img {
             transition: all var(--logo-transition-time) ease-in-out;
         }
+        #loadingbar {
+            position: absolute;
+            bottom: 54px;
+            margin: 0px var(--viewer-pad);
+            width: calc(100% - 2 * var(--viewer-pad));
+            height: 3px;
+            background: linear-gradient(to right, #388D9B 35%, rgba(230,230,230, 0.7) 35%);
+            box-shadow: 0px 0px 0.5px #777;
+        }
+        #viewar {
+            position: absolute;
+            bottom: var(--viewer-pad);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--threekit-color-primary);
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+            padding: 10px 18px;
+            border-radius: 500px;
+            cursor: pointer;
+        }
+        #controls-left .ar {
+            filter: none;
+            padding: 0px;
+        }
         @keyframes testbg {
             0% {background-color: #fff;}
             12% {background-color: #222;}
@@ -93,54 +129,57 @@
             100% {background-color:#fff;}
         }
     </style>
+</head>
+<body>
+    <div style='margin-left: 30px;'>
+        <h2>WebGL player design</h2>
+        <input type="checkbox" onclick="document.getElementById('main').classList.toggle('animatebg')" checked>Background animation<br />
+        <input type="checkbox" onclick="document.getElementById('play').classList.toggle('dontshow')">Show play button<br />
+        <input type="checkbox" onclick="document.getElementById('loadingbar').classList.toggle('dontshow')">Show animation bar<br />
+        <hr style='width: 300px; float: left'><br />
+        <input type="radio" name='ar' onclick="Array.from(document.getElementsByClassName('ar')).map(button=> {if (!button.classList.contains('dontshow')) button.classList.add('dontshow')})">No AR<br />
+        <input type="radio" name='ar' onclick="document.getElementById('ar-ios').classList.remove('dontshow'); document.getElementById('ar-android').classList.add('dontshow')" checked>Show AR button (iOS)<br />
+        <input type="radio" name='ar' onclick="document.getElementById('ar-android').classList.remove('dontshow'); document.getElementById('ar-ios').classList.add('dontshow')">Show AR button (Android)<br />
+    </div>
+    <section id='main' class='animatebg'>
+        <p id='p' class='hidden'>Powered by</p>
+        <img id='wordmark' class='hidden' src='images/threekit-wordmark.svg'>
+        <div id='logo' class='disappear' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" onmouseout="lloo()">
+            <img src='images/threekit-glyph.svg' id='glyph'>
+        </div>
+        <div class='disappear dontshow' id='loadingbar'>
+        </div>
+        <div class="dontshow" id='viewar'>
+            View in your space
+        </div>
+        <div class='controls disappear' id='controls-left'>
+                <img id='play' class='dontshow' src='images/play.svg'>
+                <img id='ar-ios' class='ar' src='images/ar-ios.svg'>
+                <img id='ar-android' class='ar dontshow' src='images/ar-android.svg'>
+        </div>
+        <div class='controls disappear' id='controls-right'>
+            <img src='images/help.svg'>
+            <img src='images/share.svg'>
+            <img src='images/fullscreen.svg'>
+        </div>
+    </section>
     <script>
-        let ploo = () => {
-            let main = document.getElementById('main');
-            if (main.classList.contains('animatebg')) {
-                main.classList.remove('animatebg');
-            } else {
-                main.classList.add('animatebg');
-            }
-        }
+        var logo = document.getElementById('logo');
+        var glyph = document.getElementById('glyph');
+        var p = document.getElementById('p');
+        var wordmark = document.getElementById('wordmark')
         let eloo = () => {    
-            let logo = document.getElementById('logo');
-            let glyph = document.getElementById('glyph');
-            let p = document.getElementById('p');
-            let wordmark = document.getElementById('wordmark')
             logo.style = "width: 140px";
             glyph.style = "transform: translate(65px)";
             p.style = "opacity: 1";
             wordmark.style = "opacity: 1; transition: all var(--logo-transition-time) 0.1s;";
         }
         let lloo = () => {
-            let logo = document.getElementById('logo');
-            let glyph = document.getElementById('glyph');
-            let p = document.getElementById('p');
-            let wordmark = document.getElementById('wordmark')
             logo.style = "width: 22px";
             glyph.style = "transform: translate(0px)";
             p.style = "opacity: 0";
             wordmark.style = "opacity: 0; transition: all 0.1s 0s";
         }
     </script>
-</head>
-<body>
-    <h2>WebGL player design</h2>
-    <button onclick='ploo()'>Toggle background animation</button>
-    <section id='main' class='animatebg'>
-        <p id='p' class='hidden'>Powered by</p>
-        <img id='wordmark' class='hidden' src='images/threekit-wordmark.svg'>
-        <div id='logo' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" onmouseout="lloo()">
-            <img src='images/threekit-glyph.svg' id='glyph'>
-        </div>        
-        <div class='controls' id='controls-left'>
-                <img src='images/play.svg'>
-        </div>
-        <div class='controls' id='controls-right'>
-            <img src='images/help.svg'>
-            <img src='images/share.svg'>
-            <img src='images/fullscreen.svg'>
-        </div>
-    </section>
 </body>
 </html>
