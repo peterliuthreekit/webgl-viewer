@@ -47,6 +47,7 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 9vh;
+            margin-bottom: 20px;
             width: 100%;
             max-width: 600px;
             height: 450px;
@@ -155,7 +156,7 @@
     <section id='main' class='animatebg'>
         <p id='p' class='hidden'>Powered by</p>
         <img id='wordmark' class='hidden' src='images/threekit-wordmark.svg'>
-        <div id='logo' class='disappear' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" ontouchstart="eloo()" onmouseout="lloo()" ontouchend="lloo()">
+        <div id='logo' class='disappear' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" onmouseout="lloo()">
             <img src='images/threekit-glyph.svg' id='glyph'>
         </div>
         <div class='disappear dontshow' id='loadingbar'>
@@ -191,6 +192,8 @@
             p.style = "opacity: 0";
             wordmark.style = "opacity: 0; transition: all 0.1s 0s";
         }
+        eloo();
+        setTimeout(lloo, 2150);
     </script>
 </body>
 </html>
