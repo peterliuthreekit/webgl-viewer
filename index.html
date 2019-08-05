@@ -54,6 +54,14 @@
             user-select: none;
             border: 1px solid #ddd;
         }
+        .table {
+            background: 
+                url('images/table.png')
+                center center / cover
+                no-repeat
+                scroll
+                content-box;
+        }
         .animatebg {
             animation: testbg 30s infinite;
         }
@@ -134,7 +142,7 @@
 <body>
     <div style='margin-left: 30px;'>
         <h2>WebGL player design</h2>
-        <input type="checkbox" onclick="document.getElementById('main').classList.toggle('animatebg')" checked>Background animation<br />
+        <input type="checkbox" onclick="document.getElementById('main').classList.toggle('animatebg'); document.getElementById('main').classList.toggle('table')" checked>Background animation<br />
         <input type="checkbox" onclick="document.getElementById('logo').classList.toggle('dontshow')" checked>Show logo<br />
         <input type="checkbox" onclick="document.getElementById('play').classList.toggle('dontshow')">Show play button<br />
         <input type="checkbox" onclick="document.getElementById('loadingbar').classList.toggle('dontshow')">Show animation bar<br />
