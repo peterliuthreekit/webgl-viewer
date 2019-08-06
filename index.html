@@ -49,8 +49,8 @@
             margin-top: 9vh;
             margin-bottom: 20px;
             width: 100%;
-            max-width: 600px;
-            height: 450px;
+            max-width: 670px;
+            height: 480px;
             background-color: #fff;
             user-select: none;
             border: 1px solid #ddd;
@@ -67,7 +67,7 @@
             animation: testbg 30s infinite;
         }
         .controls img {
-            filter: drop-shadow(0px 0px 1.8px var(--shadow-color-dark));
+            filter: drop-shadow(0px 0px 1.2px var(--shadow-color-dark));
             padding: 4px;
         }
         #controls-left {
@@ -144,16 +144,16 @@
 <body>
     <div style='margin-left: 30px;'>
         <h2>WebGL player design</h2>
-        <input type="checkbox" onclick="document.getElementById('main').classList.toggle('animatebg'); document.getElementById('main').classList.toggle('table')" checked>Background animation<br />
+        <input type="checkbox" onclick="document.getElementById('main').classList.toggle('animatebg'); document.getElementById('main').classList.toggle('table')">Background animation<br />
         <input type="checkbox" onclick="document.getElementById('logo').classList.toggle('dontshow')" checked>Show logo<br />
         <input type="checkbox" onclick="document.getElementById('play').classList.toggle('dontshow')">Show play button<br />
         <input type="checkbox" onclick="document.getElementById('loadingbar').classList.toggle('dontshow')">Show animation bar<br />
         <hr style='width: 300px; float: left'><br />
         <input type="radio" name='ar' onclick="Array.from(document.getElementsByClassName('ar')).map(button=> {if (!button.classList.contains('dontshow')) button.classList.add('dontshow')})">No AR<br />
-        <input type="radio" name='ar' onclick="document.getElementById('ar-ios').classList.remove('dontshow'); document.getElementById('ar-android').classList.add('dontshow')" checked>Show AR button (iOS)<br />
-        <input type="radio" name='ar' onclick="document.getElementById('ar-android').classList.remove('dontshow'); document.getElementById('ar-ios').classList.add('dontshow')">Show AR button (Android)<br />
+        <input type="radio" name='ar' onclick="document.getElementById('ar-ios').classList.remove('dontshow'); document.getElementById('ar-android').classList.add('dontshow')">Show AR button (iOS)<br />
+        <input type="radio" name='ar' onclick="document.getElementById('ar-android').classList.remove('dontshow'); document.getElementById('ar-ios').classList.add('dontshow')" checked>Show AR button (Android)<br />
     </div>
-    <section id='main' class='animatebg'>
+    <section id='main' class='table'>
         <p id='p' class='hidden'>Powered by</p>
         <img id='wordmark' class='hidden' src='images/threekit-wordmark.svg'>
         <div id='logo' class='disappear' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" onmouseout="lloo()">
@@ -166,8 +166,8 @@
         </div>
         <div class='controls disappear' id='controls-left'>
                 <img id='play' class='dontshow' src='images/play.svg'>
-                <img id='ar-ios' class='ar' src='images/ar-ios.svg'>
-                <img id='ar-android' class='ar dontshow' src='images/ar-android.svg'>
+                <img id='ar-ios' class='ar dontshow' src='images/ar-ios.svg'>
+                <img id='ar-android' class='ar' src='images/ar-android.svg'>
         </div>
         <div class='controls disappear' id='controls-right'>
             <img src='images/help.svg'>
