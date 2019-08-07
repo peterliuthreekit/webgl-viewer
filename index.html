@@ -67,21 +67,55 @@
             animation: testbg 30s infinite;
         }
         .controls svg {
-            filter: drop-shadow(0px 0px 0.6px var(--shadow-color-dark));
             padding: 4px;
             transition: all 0.16s ease-in-out;
-            border-radius: 100px;
         }
-        .controls svg:hover {
-            /*-fill: var(--threekit-color-primary);-*/
-            fill: #fff;
-            background-color: var(--threekit-color-primary);
+        /*------------------------------------Icons-----------------------------------*/
+        .controls.icons svg {
+            border-radius: 100px;
+            filter: drop-shadow(0px 0px 0.6px var(--shadow-color-dark));
+        }
+        .controls.icons svg:hover {
+            background-color: rgba(0,0,0,0.5);
             filter: none;
         }
-        .controls svg:active {
-            /*-fill: var(--threekit-color-primary);-*/
-            fill: #fff;
-            background-color: var(--shadow-color-brand);
+        .controls.icons svg:active {
+            background-color: rgba(0,0,0,0.8);
+        }
+        /*------------------------------------Buttons-----------------------------------*/
+        .controls.buttons svg {
+            border-radius: 3px;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .controls.buttons svg:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+        .controls.buttons svg:active {
+            background-color: rgba(0,0,0,0.9);
+        }
+        /*------------------------------------Toolbar-----------------------------------*/
+        .controls.toolbar {
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 4px;
+            background-clip: padding-box;
+            border: 2px solid  rgba(0,0,0,0.5);
+            padding: 0px 3px;
+        }
+        #controls-right.controls.toolbar svg {
+            filter: drop-shadow(0px 0px 0.6px var(--shadow-color-dark));
+            border-radius: 3px;
+            padding: 5px 6px;
+            margin: 0px;
+        }
+        /*-#controls-right.controls.toolbar svg:nth-child(1n+2) {
+            border-left: 1px solid rgba(0,0,0,0.3);
+            outline-offset: 25px;
+        }-*/
+        .controls.toolbar svg:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+        .controls.toolbar svg:active {
+            background-color: rgba(0,0,0,0.9);
         }
         #controls-left {
             position: absolute;
@@ -94,10 +128,10 @@
             right: var(--viewer-pad);
         }
         #controls-right img, #controls-right svg {
-            margin-left: 10px;
+            margin-left: 7px;
         }
         #controls-left svg {
-            margin-right: 10px;
+            margin-right: 7px;
         }
         #logo {
             position: absolute;
@@ -123,19 +157,6 @@
             height: 3px;
             background: linear-gradient(to right, #388D9B 35%, rgba(230,230,230, 0.7) 35%);
             box-shadow: 0px 0px 0.5px #777;
-        }
-        #viewar {
-            position: absolute;
-            bottom: var(--viewer-pad);
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--threekit-color-primary);
-            text-align: center;
-            color: #fff;
-            font-size: 12px;
-            padding: 10px 18px;
-            border-radius: 500px;
-            cursor: pointer;
         }
         #controls-left .ar {
             filter: none;
@@ -167,26 +188,29 @@
         <input type="radio" name='ar' onclick="Array.from(document.getElementsByClassName('ar')).map(button=> {if (!button.classList.contains('dontshow')) button.classList.add('dontshow')})">No AR<br />
         <input type="radio" name='ar' onclick="document.getElementById('ar-ios').classList.remove('dontshow'); document.getElementById('ar-android').classList.add('dontshow')">Show AR button (iOS)<br />
         <input type="radio" name='ar' onclick="document.getElementById('ar-android').classList.remove('dontshow'); document.getElementById('ar-ios').classList.add('dontshow')" checked>Show AR button (Android)<br />
+        <hr style='width: 300px; float: left'><br />
+        Controls style<br />
+        <input type="radio" name='controls' onclick="icons()" checked>Icons<br />
+        <input type="radio" name='controls' onclick="buttons()">Buttons<br />
+        <input type="radio" name='controls' onclick="toolbar()">Toolbar<br />
+
     </div>
     <section id='main' class='table'>
         <p id='p' class='hidden'>Powered by</p>
         <img id='wordmark' class='hidden' src='images/threekit-wordmark.svg'>
         <div id='logo' class='disappear' onclick="window.open('https://www.threekit.com')" onmouseover="eloo()" onmouseout="lloo()">
-            <img src='images/threekit-glyph.svg' id='glyph'>
+            <img src='images/threekit-glyph-mono.svg' id='glyph'>
         </div>
         <div class='disappear dontshow' id='loadingbar'>
         </div>
-        <div class="dontshow" id='viewar'>
-            View in your space
-        </div>
-        <div class='controls disappear' id='controls-left'>
+        <div id='controls-left' class='disappear'>
                 <svg class='dontshow' id='play' width="22" height="22" viewBox="0 0 22 22" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 11L4.75 18.7942L4.75 3.20577L19 11Z"/>
                 </svg>
                 <img id='ar-ios' class='ar dontshow' src='images/ar-ios.svg'>
                 <img id='ar-android' class='ar' src='images/ar-android.svg'>
         </div>
-        <div class='controls disappear' id='controls-right'>
+        <div id='controls-right' class='controls icons disappear'>
             <svg width="22" height="22" viewBox="0 0 22 22" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.2235 13.9686C10.2306 12.9231 10.2521 12.6966 10.4168 12.3027C10.5887 11.9017 11.0399 11.3717 11.7703 10.7129C12.4793 9.875 12.9842 9.23047 13.285 8.7793C13.5858 8.32812 13.7362 7.78385 13.7362 7.14648C13.7362 6.38737 13.5321 5.80371 13.1239 5.39551C12.7228 4.9873 12.1463 4.7832 11.3944 4.7832C10.7427 4.7832 10.1877 4.96224 9.72933 5.32031C9.27816 5.67122 9.05257 6.19043 9.05257 6.87793H7.03304L7.00081 6.81348C6.97933 5.66048 7.38395 4.73665 8.21468 4.04199C9.04541 3.34733 10.1053 3 11.3944 3C12.8052 3 13.9009 3.36165 14.6815 4.08496C15.4621 4.80111 15.8524 5.80371 15.8524 7.09277C15.8524 8.0166 15.5981 8.86165 15.0897 9.62793C14.5884 10.3942 13.9224 11.1784 13.0916 11.9805C12.7121 12.3672 12.4793 12.7145 12.3934 13.0225C12.3146 13.3304 12.3397 13.3169 12.3397 13.9686H10.2235ZM12.3397 18.8662H10.1375V16.6318H12.3397V18.8662Z"/>
             </svg>    
@@ -220,6 +244,24 @@
         }
         eloo();
         setTimeout(lloo, 2150);
+
+        
+        var controls = Array.from(document.getElementsByClassName('controls'));
+        let icons = () => {
+            controls.map(control => control.classList.remove('buttons'));
+            controls.map(control => control.classList.remove('toolbar'));
+            controls.map(control => control.classList.add('icons'));
+        }
+        let buttons = () => {
+            controls.map(control => control.classList.remove('icons'));
+            controls.map(control => control.classList.remove('toolbar'));
+            controls.map(control => control.classList.add('buttons'));
+        }
+        let toolbar = () => {
+            controls.map(control => control.classList.remove('buttons'));
+            controls.map(control => control.classList.remove('icons'));
+            controls.map(control => control.classList.add('toolbar'));
+        }
     </script>
 </body>
 </html>
